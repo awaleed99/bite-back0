@@ -7,6 +7,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
 // Common modules
 import { PrismaModule } from './common/prisma/prisma.module';
 import { RedisModule } from './common/redis/redis.module';
+import { HealthModule } from './common/health/health.module';
 
 // Feature modules
 import { AuthModule } from './modules/auth/auth.module';
@@ -20,6 +21,9 @@ import { LocationsModule } from './modules/locations/locations.module';
 import { SearchModule } from './modules/search/search.module';
 import { OffersModule } from './modules/offers/offers.module';
 import { SettingsModule } from './modules/settings/settings.module';
+
+// Guards
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
     imports: [
@@ -51,6 +55,7 @@ import { SettingsModule } from './modules/settings/settings.module';
         // Common modules
         PrismaModule,
         RedisModule,
+        HealthModule,
 
         // Feature modules
         AuthModule,
@@ -70,6 +75,7 @@ import { SettingsModule } from './modules/settings/settings.module';
             provide: APP_GUARD,
             useClass: ThrottlerGuard,
         },
+        RolesGuard,
     ],
 })
 export class AppModule { }
